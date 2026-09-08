@@ -1,20 +1,22 @@
 ## EXAMPLE REDARBOR 
 ## 2026/9/8
-## Version 1.00 Beta
+## Version 1.16 Beta
 --
 
 ## Endpoints REST
 
 ```
-GET    /api/employees              → Obtener todos los empleados
-GET    /api/employees/{id}         → Obtener empleado por ID
-POST   /api/employees              → Crear nuevo empleado
-PUT    /api/employees/{id}         → Actualizar empleado
-DELETE /api/employees/{id}         → Eliminar empleado (Soft Delete)
+POST   /api/auth/login             → Autenticación y obtención de JWT (admin / 123456)
+GET    /api/employees              → Obtener todos los empleados (Requiere JWT)
+GET    /api/employees/{id}         → Obtener empleado por ID (Requiere JWT)
+POST   /api/employees              → Crear nuevo empleado (Requiere JWT)
+PUT    /api/employees/{id}         → Actualizar empleado (Requiere JWT)
+DELETE /api/employees/{id}         → Eliminar empleado - Soft Delete (Requiere JWT)
 ```
 
 ### **Swagger**
  `http://localhost:5000/swagger`
+
 
 ---
 
@@ -38,6 +40,19 @@ DELETE /api/employees/{id}         → Eliminar empleado (Soft Delete)
 ---
 
 ## Test
+
+### **0. Autenticación (Login)**
+Credenciales fijas: usuario `admin`, contraseña `123456`.
+```bash
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "123456"
+  }'
+```
+> Respuesta: `{"token":"ey...", "tokenType":"Bearer"}`.
+> Copia el token para incluirlo en la cabecera: `-H "Authorization: Bearer <TOKEN>"` en el resto de peticiones.
 
 ### **1. Crear Employee**
 ```bash
@@ -107,8 +122,8 @@ dotnet test
 # Ejecutar con verbose
 dotnet test -v detailed
 
-# Tests disponibles: 28
+# Tests disponibles: 21
 # - Command Handlers: 6
 # - Query Handlers: 5
-# - Validators: 17
+# - Validators: 10
 ```

@@ -22,8 +22,10 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        // TODO: Validar credenciales contra la BD con tu MediatR / Service
-        // if (!esValido) return Unauthorized("Usuario o contraseña incorrectos");
+        if (request.Username != "admin" || request.Password != "123456")
+        {
+            return Unauthorized(new { message = "Usuario o contraseña incorrectos." });
+        }
 
         var token = GenerarJwtToken(request.Username);
 
