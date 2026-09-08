@@ -1,0 +1,10 @@
+﻿{
+  "companyId": 1,
+  "email": "test4@test.com",
+  "password": "test123",
+  "portalId": 1,
+  "roleId": 1,
+  "statusId": 1,
+  "username": "test4",
+  "name": "Test User"
+}
